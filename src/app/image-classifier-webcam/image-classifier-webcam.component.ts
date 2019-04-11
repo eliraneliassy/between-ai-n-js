@@ -13,12 +13,14 @@ export class ImageClassifierWebcamComponent implements OnInit, AfterViewInit {
   @ViewChild('video') video: ElementRef;
   predictions: Prediction[];
   model: any;
+  loading = true;
   constructor() { }
 
   async ngOnInit() {
     console.log('loading mobilenet model...');
     this.model = await mobilenet.load();
     console.log('Sucessfully loaded model');
+    this.loading = false;
 
     setInterval(async () => {
       this.predictions = await this.model.classify(this.video.nativeElement);
